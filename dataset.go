@@ -25,7 +25,11 @@ func GetDataSet(rows *sql.Rows) DataSet {
 
 		for i, m := range cols {
 			v := coldata[i].(*interface{})
-			colmap[m] = string((*v).([]byte))
+			if *v == nil {
+				colmap[m] = ""
+			} else {
+				colmap[m] = string((*v).([]byte))
+			}
 			// colmap[m] = fmt.Sprintf("%s", *v)
 		}
 		dataset = append(dataset, colmap)
